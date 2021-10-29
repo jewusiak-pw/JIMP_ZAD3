@@ -5,6 +5,10 @@
                                  * dobrze wywolujemy funkcje z naszej
                                  * biblioteki */
 
+                                 double zm(double x){
+    return x/2;
+}
+
 int main(int argc, char *argv[]) {
     double w_1[10];
     double w_2[10];
@@ -77,13 +81,15 @@ int main(int argc, char *argv[]) {
     printf("Suma w_1 i w_2: \n");
 
     if (n1 == n2) {
-        printf("Suma wczytanych wektorow:\n");
         double s[10];
         SumaWektorow(s ,w_1,w_2, n1);
         wypisz_wektor(s, n1);
     } else {
         printf("Wczytane wektory maja rozna dlugosci i nie mozna ich zsumować\n");
     }
+
+    Normalizuj(&zm, &w_1, n1);
+    wypisz_wektor(w_1, n1);
 
     return 0;
 }

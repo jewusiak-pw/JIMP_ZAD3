@@ -112,3 +112,4 @@ void Normalizuj(double (*f)(double), double *v, int n){
     while(n--)
         *v++ = f(*v);
 }
+
