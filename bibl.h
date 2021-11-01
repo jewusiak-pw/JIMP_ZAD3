@@ -57,11 +57,11 @@ double *Normalizuj(double (*f)(double *, int), double *v, int n);
 int readCF(FILE *p, double *v, int max_length);
 
 /* (podpunkt 9)
- * CzyOrtagonalne: Funkcja (z podpunktu 9) zwracająca:
+ * CzyOrtogonalne: Funkcja (z podpunktu 9) zwracająca:
  *      0 - dla nieortagonalnych v1[n] i v2[n]
  *      1 - dla ortagornalnych v1[n] i v2[n]
  */
-int CzyOrtagonalne(double *v1, double *v2, int n1, int n2);
+int CzyOrtogonalne(double *v1, double *v2, int n1, int n2);
 
 
 
@@ -70,7 +70,8 @@ int CzyOrtagonalne(double *v1, double *v2, int n1, int n2);
 /* Wypisuje wektor ( x x ...)*/
 void wypisz_wektor(double *v, int n);
 
-
+/* zerowa: Zwraca 0 - dla pokazania działania funkcji CzyOrtogonalne */
+double zerowa(double *v, int n);
 
 
 #endif

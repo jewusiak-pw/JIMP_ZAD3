@@ -163,12 +163,12 @@ int readCF(FILE *ind, double *v, int max_length) {
 
 
 /* (podpunkt 9)
- * CzyOrtagonalne: Funkcja (z podpunktu 9) zwracająca:
+ * CzyOrtogonalne: Funkcja (z podpunktu 9) zwracająca:
  *     -1 - dla n1 != n2
  *      0 - dla nieortagonalnych v1[n1] i v2[n2]
  *      1 - dla ortagornalnych v1[n1] i v2[n2]
  */
-int CzyOrtagonalne(double *v1, double *v2, int n1, int n2) {
+int CzyOrtogonalne(double *v1, double *v2, int n1, int n2) {
 
     return n1 == n2 ? (dot_product(v1, v2, n1) == 0 ? 1 : 0) : -1;
 
@@ -180,11 +180,15 @@ int CzyOrtagonalne(double *v1, double *v2, int n1, int n2) {
 
 /* Wypisuje wektor ( x x ...)*/
 void wypisz_wektor(double *v, int n) {
-    printf("( ", n);
-    for (int i = 0; i < n; i++) {
-        printf("%f ", *v);
-        v++;
-    }
+    printf("( ");
+    while(n--)
+        printf("%f ", *v++);
+
     printf(")\n");
 
+}
+
+/* zerowa: Zwraca 0 - dla pokazania działania funkcji CzyOrtogonalne */
+double zerowa(double *v, int n) {
+    return 0;
 }

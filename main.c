@@ -1,31 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "bibl.h"               /* dzieki temu kompilator moze sprawdzic, czy
                                  * dobrze wywolujemy funkcje z naszej
                                  * biblioteki */
 
-double zerowa(double *x){
-    return 0;
-}
 
 int main(int argc, char *argv[]) {
     double w_1[10];
     double w_2[10];
-    double w_3[10];
     int n1;
     int n2;
-    int n3;
-    int i;
 
-    FILE *we = argc > 1 ? fopen(argv[1], "r") : stdin;    /* jesli argc > 1 to* program zostal
-                                                                         * wywolany z argumentem
-                                                                         * - probujemy otworzyc
-                                                                         * taki plik do czytania */
+    FILE *we = argc > 1 ? fopen(argv[1], "r") : stdin;
 
-    if (we == NULL) {       /* stdin != NULL, a wiec to mozliwe tylko,
-                                 * gdy argv[1] zawiera cos, co nie jest nazwa
-                                 * istniejacego pliku */
+    if (we == NULL) {
         fprintf(stderr, "Plik wejsciowy %s nie istnieje!\n", argv[1]);
         exit(1);
     }
@@ -37,7 +25,7 @@ int main(int argc, char *argv[]) {
    n1 = readCF(we, w_1, 10);   //czytamy wg formatu z podpunktu 8
 
     if (n1 > 0) {
-        printf("\nWczytano %i-elementowy wektor:\n", n1);
+        printf("\nWczytano %i-elementowy wektor w_1:\n", n1);
         wypisz_wektor(w_1, n1);
     } else {
         fprintf(stderr, "\nWystapil blad przy wczytywaniu wektora: kod bledu=%i\n", n1);
@@ -55,7 +43,7 @@ int main(int argc, char *argv[]) {
     n2 = readCF(we, w_2, 10);    //czytamy wg formatu z podpunktu 8
 
     if (n2 > 0) {
-        printf("Wczytano %i-elementowy wektor:\n", n2);
+        printf("Wczytano %i-elementowy wektor w_2:\n", n2);
         wypisz_wektor(w_2, n2);
     } else {
         fprintf(stderr, "Wystapil blad przy wczytywaniu wektora: kod bledu=%i\n", n2);
@@ -106,12 +94,12 @@ int main(int argc, char *argv[]) {
     printf("\n\n");
 
     printf("Wektory w_1 i w_2 są ");
-    switch(CzyOrtagonalne(w_1, w_2, n1, n2)){
+    switch(CzyOrtogonalne(w_1, w_2, n1, n2)){
         case 0:
-            printf("nieortagonalne.\n");
+            printf("nieortogonalne.\n");
             break;
         case 1:
-            printf("ortagonalne.\n");
+            printf("ortogonalne.\n");
             break;
         case -1:
             printf("nierównej długości, nie można stwierdzić ortogonalności.\n");
