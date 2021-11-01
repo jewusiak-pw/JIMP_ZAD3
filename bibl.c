@@ -2,6 +2,7 @@
 
 #include <math.h>               /* dzieki temu kompilator sprawdzi, czy
                                  * dobrze uzywamy funkcji sqrt */
+#include <malloc.h>
 
 /* Definicje funkcji */
 
@@ -81,18 +82,12 @@ double dot_product(double v[], double u[], int n) {
 }
 
 
-/* Wypisuje wektor */
-void wypisz_wektor(double v[], int n){
-    printf("( ", n);
-    for (int i = 0; i < n; i++)
-        printf("%f ", v[i]);
-    printf(")\n");
+/* Funkcje z ZAD3 */
 
-}
-
-
-/* L1: Oblicza norme L1 wektora */
-double L1(double v[], int n) {
+/* (podpunkt 1)
+ * L1: Oblicza normę L1 wektora (podpunkt 1)
+ */
+double L1(double *v, int n) {
     double sum = 0;
 
     while (n--)
@@ -101,15 +96,95 @@ double L1(double v[], int n) {
 }
 
 
-/* SumaWektorow: Oblicza sumę wektorów v1[] i v2[] o długości n, przyjmuje wskaźnik na wektor s w którym znajdą się zsumowane elementy */
-void SumaWektorow(double *s, double v1[], double v2[], int n) {
-    for(int i=0; i<n; i++)
-        *s++ = v1[i] + v2[i];
+/* (podpunkt 2)
+ * SumaWektorow: Zwraca wektor sumy wektorów v1[n] i v2[n], a następnie zwraca wektor sumy
+ */
+double *SumaWektorow(double *v1, double *v2, int n) {
+
+    double *s = (double *) malloc(n * sizeof(double));
+
+    for (int i = 0; i < n; i++)
+        s[i] = v1[i] + v2[i];
+
+    return s;
 }
 
-/* Normalizuj: Normalizuje funkcją double f(double) wektor, wczytywany wskaźnikiem v */
-void Normalizuj(double (*f)(double), double *v, int n){
-    while(n--)
-        *v++ = f(*v);
+
+/* (podpunkt 5)
+ * Normalizuj: Zwraca wektor v[n] znormalizowany funkcją f, bądź NULL jeżeli norma = 0 (nie można dzielić przez 0)
+ */
+double *Normalizuj(double (*f)(double *, int), double *v, int n) {
+    double *s = (double *) calloc(n, sizeof(double));
+    double norm = f(v, n);
+    if (norm == 0)
+        return NULL;
+
+
+    for (int i = 0; i < n; i++)
+        s[i] = v[i] / norm;
+    return s;
 }
 
+
+/* (podpunkt 8)
+ * readCF: Zwraca liczbę odczytanych elementów typu double do wskaźnika v z wejścia p
+ * o formacie dl <x, x, ...,x> gdzie dl - długość, x - kolejne wartości.
+ * Zwraca -1 jeżeli:
+ *      format wejścia jest zły lub
+ *      dl > max_length lub
+ *      wczytano <= 0 elementów
+ */
+int readCF(FILE *ind, double *v, int max_length) {
+    int n, a, c;
+
+    if (fscanf(ind, "%i", &n) != 1 || n <= 0 || n > max_length) //czy plik ok
+        return -1;
+
+
+    while ((c = fgetc(ind)) == ' ') {} //pomiń spcje
+
+    if (c != '<')
+        return -1;
+
+    for (int i = 0; i < n; i++) {
+        if (fscanf(ind, "%lf", &v[i]) != 1)
+            return -1;
+        while ((c = fgetc(ind)) == ',') {}
+    }
+
+    if (c == ' ')
+        while ((c = fgetc(ind)) == ' ') {} //pomiń spcje
+
+    if (c != '>')
+        return -1;
+
+    return n;
+}
+
+
+/* (podpunkt 9)
+ * CzyOrtagonalne: Funkcja (z podpunktu 9) zwracająca:
+ *     -1 - dla n1 != n2
+ *      0 - dla nieortagonalnych v1[n1] i v2[n2]
+ *      1 - dla ortagornalnych v1[n1] i v2[n2]
+ */
+int CzyOrtagonalne(double *v1, double *v2, int n1, int n2) {
+
+    return n1 == n2 ? (dot_product(v1, v2, n1) == 0 ? 1 : 0) : -1;
+
+}
+
+
+
+/* Funkcje pomocnicze */
+
+/* Wypisuje wektor ( x x ...)*/
+void wypisz_wektor(double *v, int n) {
+    printf("( ", n);
+    for (int i = 0; i < n; i++) {
+        printf("%f ", *v);
+        v++;
+    }
+    printf(")\n");
+
+}

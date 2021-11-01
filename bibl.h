@@ -14,6 +14,7 @@
  */
 int read(FILE *p, double v[], int max_l_e);
 
+
 /*
  * L2: oblicza norme L2 (pierwiastek z sumy kwadratow) wektora double v[] o
  * dlugosci n
@@ -26,17 +27,51 @@ double L2(double v[], int n);
  */
 double dot_product(double v[], double u[], int n);
 
-/* Wypisuje wektor */
-void wypisz_wektor(double v[], int n);
 
-/* L1: Oblicza norme L1 wektora */
-double L1(double v[], int n);
 
-/* SumaWektorow: Oblicza sumę wektorów v1[] i v2[] o długości n, przyjmuje wskaźnik na wektor s w którym znajdą się zsumowane elementy */
-void SumaWektorow(double *s, double v1[], double v2[], int n);
+/* Funkcje z ZAD3 */
 
-/* Normalizuj: Normalizuje funkcją double f(double) wektor, wczytywany wskaźnikiem v */
-void Normalizuj(double (*f)(double), double *v, int n);
+/* (podpunkt 1)
+ * L1: Oblicza normę L1 wektora (podpunkt 1)
+ */
+double L1(double *v, int n);
+
+/* (podpunkt 2)
+ * SumaWektorow: Zwraca wektor sumy wektorów v1[n] i v2[n], a następnie zwraca wektor sumy
+ */
+double *SumaWektorow(double *v1, double *v2, int n);
+
+/* (podpunkt 5)
+ * Normalizuj: Zwraca wektor v[n] znonmalizowany funkcją f
+ */
+double *Normalizuj(double (*f)(double *, int), double *v, int n);
+
+/* (podpunkt 8)
+ * readCF: Zwraca liczbę odczytanych elementów typu double do wskaźnika v z wejścia p
+ * o formacie dl <x, x, ...,x> gdzie dl - długość, x - kolejne wartości.
+ * Zwraca -1 jeżeli:
+ *      format wejścia jest zły lub
+ *      dl > max_length lub
+ *      wczytano <= 0 elementów
+ */
+int readCF(FILE *p, double *v, int max_length);
+
+/* (podpunkt 9)
+ * CzyOrtagonalne: Funkcja (z podpunktu 9) zwracająca:
+ *      0 - dla nieortagonalnych v1[n] i v2[n]
+ *      1 - dla ortagornalnych v1[n] i v2[n]
+ */
+int CzyOrtagonalne(double *v1, double *v2, int n1, int n2);
+
+
+
+/* Funkcje pomocnicze */
+
+/* Wypisuje wektor ( x x ...)*/
+void wypisz_wektor(double *v, int n);
+
+
+
 
 #endif
 
